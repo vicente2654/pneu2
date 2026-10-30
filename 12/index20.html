@@ -1,0 +1,334 @@
+<!DOCTYPE html><html lang="pt-BR">
+
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+
+    <meta charset="UTF-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Escolha a medida do seu pneu</title>
+    <style>
+        body {
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background: rgb(255, 255, 255);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        .header img {
+            width: 120px;
+        }
+
+        .main-content {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content h5 {
+            font-weight: bold;
+            color: #ee4d2d;
+            margin-bottom: 20px;
+        }
+
+        .opcao-card {
+            border: 2px solid #e6e6e6;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items-center;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .opcao-card:hover {
+            border-color: #ee4d2d;
+            background-color: rgba(29, 78, 216, 0.05);
+        }
+
+        .opcao-card.selecionado {
+            border-color: #ee4d2d;
+            background-color: rgba(29, 78, 216, 0.1);
+        }
+
+        .opcao-card h6 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .opcao-card small {
+            color: #666;
+        }
+
+        .opcao-card .preco {
+            font-weight: bold;
+            color: r#ee4d2d;
+        }
+
+        .opcao-card .icon {
+            margin-right: 15px;
+            font-size: 24px;
+            color: #ee4d2d;
+        }
+
+        .btn-custom {
+            background-color: #ee4d2d;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-custom:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-custom:hover:not(:disabled) {
+            background-color: #ee4d2d;
+        }
+
+        .footer {
+        background: #ffffff;
+        border-top: 1px solid #e6e6e6;
+        text-align: center;
+        padding: 15px;
+        font-size: 10px;
+        color: #666;
+    }
+    </style>
+<script>
+if (document.addEventListener) {
+    document.addEventListener("keydown", bloquearSource);
+} else { //Versões antigas do IE
+    document.attachEvent("onkeydown", bloquearSource);
+}
+
+function bloquearSource(e) {
+    e = e || window.event;
+
+    var code = e.which || e.keyCode;
+
+    if (
+        e.ctrlKey &&
+        (code == 83 || code == 85) //83 = S, 85 = U
+    ) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        } else {
+            e.returnValue = false;
+        }
+
+        return false;
+    }
+}
+</script><style>
+/*desabilita a seleção no body*/
+body {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Chrome/Safari/Opera */
+       -khtml-user-select: none; /* Konqueror */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none;
+}
+
+/*habilita a seleção nos campos editaveis*/
+input, textarea {
+    -webkit-touch-callout: initial; /* iOS Safari */
+      -webkit-user-select: text; /* Chrome/Safari/Opera */
+       -khtml-user-select: text; /* Konqueror */
+         -moz-user-select: text; /* Firefox */
+          -ms-user-select: text; /* Internet Explorer/Edge */
+              user-select: text;
+}
+
+/*habilita a seleção nos campos com o atributo contenteditable*/
+[contenteditable=true] {
+    -webkit-touch-callout: initial; /* iOS Safari */
+      -webkit-user-select: all; /* Chrome/Safari/Opera */
+       -khtml-user-select: all; /* Konqueror */
+         -moz-user-select: all; /* Firefox */
+          -ms-user-select: all; /* Internet Explorer/Edge */
+              user-select: all;
+}
+</style><script>
+if (document.addEventListener) {
+    document.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+        return false;
+    });
+} else { //Versões antigas do IE
+    document.attachEvent("oncontextmenu", function(e) {
+        e = e || window.event;
+        e.returnValue = false;
+        return false;
+    });
+}
+</script>
+
+<div class="header">
+    <img src="images/shopee-logo.png" alt="Logo">
+</div>
+
+<div class="main-content">
+    <h5> Selecione a medida do pneu
+</h5>
+    <p> Selecione a medida do pneu
+.</p>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #opcoes-medidas {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 10px;
+            justify-content: center;
+            padding: 10px;
+            max-width: 600px;
+            margin: auto;
+        }
+        .opcao-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            background-color: white;
+        }
+        .opcao-card img {
+            width: 60px;
+            height: auto;
+            margin-bottom: 5px;
+        }
+        .opcao-card.selected {
+            border-color: #ee4d2d;
+            background-color: #ffe6cc;
+        }
+        .btn-custom {
+            background-color: #ccc;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: not-allowed;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .btn-custom.enabled {
+            background-color: #ee4d2d;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div id="opcoes-medidas">
+        <!-- Medidas mais comuns para Aros 13, 14, 15, 16 e 17 -->
+        <div class="opcao-card" onclick="selecionarMedida('165/70')"><img src="https://images.tcdn.com.br/img/img_prod/669618/pneu_185_65_r15_aro_15_linglong_green_max_hp300_88h_3227_2_7ed8aab1fa6d75ca0108e05a87035857.jpg" width="100"><span>165/70</span></div>
+        <div class="opcao-card" onclick="selecionarMedida('165/80')"><img src="https://images.tcdn.com.br/img/img_prod/669618/pneu_185_65_r15_aro_15_linglong_green_max_hp300_88h_3227_2_7ed8aab1fa6d75ca0108e05a87035857.jpg" width="100"><span>165/80</span></div>
+        <div class="opcao-card" onclick="selecionarMedida('175/60')"><img src="https://images.tcdn.com.br/img/img_prod/669618/pneu_185_65_r15_aro_15_linglong_green_max_hp300_88h_3227_2_7ed8aab1fa6d75ca0108e05a87035857.jpg" width="100"><span>175/60</span></div>
+        <div class="opcao-card" onclick="selecionarMedida('175/75')"><img src="https://images.tcdn.com.br/img/img_prod/669618/pneu_185_65_r15_aro_15_linglong_green_max_hp300_88h_3227_2_7ed8aab1fa6d75ca0108e05a87035857.jpg" width="100"><span>175/75</span></div>
+        <div class="opcao-card" onclick="selecionarMedida('185/65')"><img src="https://images.tcdn.com.br/img/img_prod/669618/pneu_185_65_r15_aro_15_linglong_green_max_hp300_88h_3227_2_7ed8aab1fa6d75ca0108e05a87035857.jpg" width="100"><span>185/65</span></div>
+        <div class="opcao-card" onclick="selecionarMedida('195/60')"><img src="https://images.tcdn.com.br/img/img_prod/669618/pneu_185_65_r15_aro_15_linglong_green_max_hp300_88h_3227_2_7ed8aab1fa6d75ca0108e05a87035857.jpg" width="100"><span>195/60</span></div>
+        <div class="opcao-card" onclick="selecionarMedida('195/65')"><img src="https://images.tcdn.com.br/img/img_prod/669618/pneu_185_65_r15_aro_15_linglong_green_max_hp300_88h_3227_2_7ed8aab1fa6d75ca0108e05a87035857.jpg" width="100"><span>195/65</span></div>
+        <div class="opcao-card" onclick="selecionarMedida('205/55')"><img src="https://images.tcdn.com.br/img/img_prod/669618/pneu_185_65_r15_aro_15_linglong_green_max_hp300_88h_3227_2_7ed8aab1fa6d75ca0108e05a87035857.jpg" width="100"><span>205/55</span></div>
+        <div class="opcao-card" onclick="selecionarMedida('205/60')"><img src="https://images.tcdn.com.br/img/img_prod/669618/pneu_185_65_r15_aro_15_linglong_green_max_hp300_88h_3227_2_7ed8aab1fa6d75ca0108e05a87035857.jpg" width="100"><span>205/60</span></div>
+        <div class="opcao-card" onclick="selecionarMedida('215/55')"><img src="https://images.tcdn.com.br/img/img_prod/669618/pneu_185_65_r15_aro_15_linglong_green_max_hp300_88h_3227_2_7ed8aab1fa6d75ca0108e05a87035857.jpg" width="100"><span>215/55</span></div>
+        <div class="opcao-card" onclick="selecionarMedida('215/60')"><img src="https://images.tcdn.com.br/img/img_prod/669618/pneu_185_65_r15_aro_15_linglong_green_max_hp300_88h_3227_2_7ed8aab1fa6d75ca0108e05a87035857.jpg" width="100"><span>215/60</span></div>
+        <div class="opcao-card" onclick="selecionarMedida('225/50')"><img src="https://images.tcdn.com.br/img/img_prod/669618/pneu_185_65_r15_aro_15_linglong_green_max_hp300_88h_3227_2_7ed8aab1fa6d75ca0108e05a87035857.jpg" width="100"><span>225/50</span></div>
+    </div>
+
+    <button id="continuarBtn" class="btn-custom" disabled onclick="irParaProximaPagina()">Continuar</button>
+
+    <script>
+        function selecionarMedida(medida) {
+            // Remove a classe "selected" de todas as opções
+            document.querySelectorAll('.opcao-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            // Adiciona a classe "selected" na opção clicada
+            const opcaoSelecionada = [...document.querySelectorAll('.opcao-card')].find(card => 
+                card.innerText.trim() === medida
+            );
+            if (opcaoSelecionada) {
+                opcaoSelecionada.classList.add('selected');
+            }
+
+            // Armazena no localStorage
+            localStorage.setItem('medidaPneu', medida);
+            console.log('Medida selecionada:', medida); // Depuração
+
+            // Ativa o botão "Continuar"
+            const botao = document.getElementById('continuarBtn');
+            botao.classList.add('enabled');
+            botao.disabled = false;
+        }
+
+        function irParaProximaPagina() {
+            window.location.href = "index.html"; // Caminho corrigido
+        }
+    </script>
+</body>
+</html>
+
+<script
+  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-subids
+  async
+  defer
+></script>
+
+<script>
+  window.pixelId = "67a2ccee407daa3589707502";
+  var a = document.createElement("script");
+  a.setAttribute("async", "");
+  a.setAttribute("defer", "");
+  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+  document.head.appendChild(a);
+</script>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1305780857141681');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1305780857141681&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</body>
+</html>

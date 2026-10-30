@@ -1,0 +1,309 @@
+<!DOCTYPE html><html lang="pt-BR">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8">
+    <meta charset="UTF-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Escolha quantos pneus você quer</title>
+    <style>
+        body {
+            background-color: #f9f9f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .header {
+            background: rgb(255, 255, 255);
+            color: white;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        .header img {
+            width: 120px;
+        }
+
+        .main-content {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-content h5 {
+            font-weight: bold;
+            color: #ee4d2d;
+            margin-bottom: 20px;
+        }
+
+        .opcao-card {
+            border: 2px solid #e6e6e6;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items-center;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .opcao-card:hover {
+            border-color: #ee4d2d;
+            background-color: rgba(29, 78, 216, 0.05);
+        }
+
+        .opcao-card.selecionado {
+            border-color: #ee4d2d;
+            background-color: rgba(29, 78, 216, 0.1);
+        }
+
+        .opcao-card h6 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .opcao-card small {
+            color: #666;
+        }
+
+        .opcao-card .preco {
+            font-weight: bold;
+            color: r#ee4d2d;
+        }
+
+        .opcao-card .icon {
+            margin-right: 15px;
+            font-size: 24px;
+            color: #ee4d2d;
+        }
+
+        .btn-custom {
+            background-color: #ee4d2d;
+            color: white;
+            font-weight: bold;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn-custom:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .btn-custom:hover:not(:disabled) {
+            background-color: #ee4d2d;
+        }
+
+        .footer {
+        background: #ffffff;
+        border-top: 1px solid #e6e6e6;
+        text-align: center;
+        padding: 15px;
+        font-size: 10px;
+        color: #666;
+    }
+    </style>
+<script>
+if (document.addEventListener) {
+    document.addEventListener("keydown", bloquearSource);
+} else { //Versões antigas do IE
+    document.attachEvent("onkeydown", bloquearSource);
+}
+
+function bloquearSource(e) {
+    e = e || window.event;
+
+    var code = e.which || e.keyCode;
+
+    if (
+        e.ctrlKey &&
+        (code == 83 || code == 85) //83 = S, 85 = U
+    ) {
+        if (e.preventDefault) {
+            e.preventDefault();
+        } else {
+            e.returnValue = false;
+        }
+
+        return false;
+    }
+}
+</script><style>
+/*desabilita a seleção no body*/
+body {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Chrome/Safari/Opera */
+       -khtml-user-select: none; /* Konqueror */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none;
+}
+
+/*habilita a seleção nos campos editaveis*/
+input, textarea {
+    -webkit-touch-callout: initial; /* iOS Safari */
+      -webkit-user-select: text; /* Chrome/Safari/Opera */
+       -khtml-user-select: text; /* Konqueror */
+         -moz-user-select: text; /* Firefox */
+          -ms-user-select: text; /* Internet Explorer/Edge */
+              user-select: text;
+}
+
+/*habilita a seleção nos campos com o atributo contenteditable*/
+[contenteditable=true] {
+    -webkit-touch-callout: initial; /* iOS Safari */
+      -webkit-user-select: all; /* Chrome/Safari/Opera */
+       -khtml-user-select: all; /* Konqueror */
+         -moz-user-select: all; /* Firefox */
+          -ms-user-select: all; /* Internet Explorer/Edge */
+              user-select: all;
+}
+</style><script>
+if (document.addEventListener) {
+    document.addEventListener("contextmenu", function(e) {
+        e.preventDefault();
+        return false;
+    });
+} else { //Versões antigas do IE
+    document.attachEvent("oncontextmenu", function(e) {
+        e = e || window.event;
+        e.returnValue = false;
+        return false;
+    });
+}
+</script>
+
+<div class="header">
+    <img src="images/shopee-logo.png" alt="Logo">
+</div>
+
+<div class="main-content">
+    <h5>Escolha a quantidade de pneus</h5>
+    <p>Garanta seus pneus com condições especiais. Escolha a quantidade para finalizar o pedido.</strong></p>
+
+    <div id="opcoes-envio">
+        <!-- Opção 1 PNEU PIRELLI -->
+        <div class="opcao-card" onclick="selecionarOpcao('sedex')">
+            <div class="d-flex align-items-center">
+                <span class="icon">
+                    <img src="https://images.tcdn.com.br/img/img_prod/1313936/pneu_pirelli_aro_17_scorpion_205_55r17_91v_557_1_63620bd3d5de68c7ecd5059031ada7b6.jpg" alt="Pneu Westlake" style="width: 50px; height: auto;">
+                </span>
+                <div>
+                    <h6>1 PNEU PIRELLI </h6>
+                    <small>Entregamos de 2 a 5 dias úteis</small>
+                </div>
+            </div>
+            <div class="preco">R$ 94,90</div>
+        </div>
+
+        <!-- Opção EXPRESS -->
+        <div class="opcao-card" onclick="selecionarOpcao('express')">
+            <div class="d-flex align-items-center">
+                <span class="icon">
+                    <img src="https://m.magazineluiza.com.br/a-static/420x420/kit-2-pneu-aro-14-185-70r14-firestone-88t-tl-f-600/lojahipervarejo/kit2106bf2/c752a9d4dac5e014aab6f63abc144548.jpeg" alt="Kit 2 Pneus Westlake" style="width: 50px; height: auto;">
+                </span>
+                <div>
+                    <h6>2 PNEUS PIRELLI</h6>
+                    <small>Entregamos de 2 a 5 dias úteis</small>
+                </div>
+            </div>
+            <div class="preco">R$ 179,58</div>
+        </div>
+
+        <!-- Opção PAC -->
+        <div class="opcao-card" onclick="selecionarOpcao('pac')">
+            <div class="d-flex align-items-center">
+                <span class="icon">
+                    <img src="https://imgs.extra.com.br/1521756166/1xg.jpg?imwidth=500?imwidth=828" alt="Kit 2 Pneus Westlake" style="width: 50px; height: auto;">
+                </span>
+                <div>
+                    <h6>4 PNEUS PIRELLI</h6>
+                    <small>Entregamos de 2 a 5 dias úteis</small>
+                </div>
+            </div>
+            <div class="preco">R$ 249,97</div>
+        </div>
+    </div>
+
+    <button id="continuarEnvio" class="btn-custom" disabled>Continuar</button>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+    Copyright © 2025 Shopee. Todos os direitos reservados.<br>
+    Política de Privacidade | Termos de Uso | Vendas e Reembolsos | Legal | Mapa do Site
+</div>
+
+<script>
+    let opcaoSelecionada = null;
+
+    function selecionarOpcao(opcao) {
+        opcaoSelecionada = opcao;
+
+        // Remove a classe 'selecionado' de todas as opções
+        document.querySelectorAll('.opcao-card').forEach(function(card) {
+            card.classList.remove('selecionado');
+        });
+
+        // Adiciona a classe 'selecionado' à opção clicada
+        document.querySelector(`.opcao-card[onclick="selecionarOpcao('${opcao}')"]`).classList.add('selecionado');
+
+        // Habilita o botão de continuar
+        document.getElementById('continuarEnvio').disabled = false;
+    }
+
+    document.getElementById('continuarEnvio').addEventListener('click', function() {
+        if (opcaoSelecionada) {
+            // Redireciona para o caminho correspondente
+            if (opcaoSelecionada === 'express') {
+                window.location.href = 'express/index.html';
+            } else if (opcaoSelecionada === 'pac') {
+                window.location.href = 'pac/index.html';
+            } else if (opcaoSelecionada === 'sedex') {
+                window.location.href = 'sedex/index.html';
+            }
+        }
+    });
+</script>
+
+<script
+  src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+  data-utmify-prevent-subids
+  async
+  defer
+></script>
+
+<script>
+  window.pixelId = "67a2ccee407daa3589707502";
+  var a = document.createElement("script");
+  a.setAttribute("async", "");
+  a.setAttribute("defer", "");
+  a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+  document.head.appendChild(a);
+</script>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '2423207534854704');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=2423207534854704&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
+
+</body>
+</html>
